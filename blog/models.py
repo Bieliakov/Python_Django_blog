@@ -1,3 +1,6 @@
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+
 from django.db import models
 from django.core.urlresolvers import reverse
 
@@ -29,6 +32,12 @@ class Post(models.Model):
     post_author = models.ForeignKey(User)
     objects = EntryQuerySet.as_manager()
     post_tags = models.ManyToManyField(Tag)
+    post_image = models.ImageField(upload_to='images/')
+    post_thumbnail = ImageSpecField(source='post_image',
+                                  processors=[ResizeToFill(100, 100)],
+                                  format='JPEG',
+                                  options={'quality': 60})
+    
     life = 'Lf'
     python = 'Py'
     javascript = 'JS'

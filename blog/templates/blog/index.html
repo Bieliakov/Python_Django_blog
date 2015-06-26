@@ -1,10 +1,12 @@
-{% load staticfiles %}
+﻿{% load staticfiles %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}" />
 
 {% if latest_post_list %}
     <ul>
     {% for post in latest_post_list %}
+        <img src="{% static post.post_image.url %}">
+        <img src="{% static post.post_thumbnail.url %}">
         <li><a href="{% url 'blog:detail' post.post_id %}">{{ post.post_title }}</a></li>
     {% endfor %}
     </ul>
