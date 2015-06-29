@@ -1,7 +1,36 @@
-﻿<h1>{{ post.post_title }}</h1>
+﻿{% extends "blog/index.html" %}
 
-<ul>
-{% for comment in post.comment_set.all %}
-    <li>{{ comment.comment_body }}</li>
-{% endfor %}
-</ul>
+{% block title %}Detail page{% endblock %}
+
+{% load staticfiles %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}" />
+    
+<section>    
+{% block content %}
+
+    <article>
+        <div class='post_header'>
+            <h1>{{ post.title }}</h1>
+            <div> Posted by {{ post.author}} on {{ post.pub_date }} in {{ post.category }}</div>
+
+        </div>
+
+        <div>
+            {{ post.body }}
+        </div>
+
+        <ul>
+        {% for comment in post.comment_set.all %}
+            <li>
+                <div> {{ comment.author }} {{ comment.pub_date}}</div>
+            
+                <div>{{ comment.body }}</div>
+            
+            </li>
+        {% endfor %}
+        </ul>
+    </article>    
+{% endblock %}
+    
+</section>

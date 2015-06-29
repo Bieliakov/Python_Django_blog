@@ -1,0 +1,21 @@
+{% extends "blog/index.html" %}
+
+{% block title %}Category page{% endblock %}
+
+{% block content %}
+
+        <h1>{{ category_name }}</h1>
+        {% if category %}
+            {% if posts %}
+                {% for post in posts %}
+                    <article>
+                        <a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a>
+                    </article>
+                {% endfor %}
+            {% else %}
+                <strong>No posts currently in category.</strong>
+            {% endif %}
+        {% else %}
+            The specified category {{ category_name }} does not exist!
+        {% endif %}
+{% endblock %}

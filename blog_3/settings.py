@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
+    
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,6 +69,16 @@ TEMPLATES = [
         },
     },
 ]
+
+# next two lines is under question
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
+TEMPLATE_DIRS = (
+    TEMPLATE_PATH,
+)
+#print(TEMPLATE_PATH)
+#c:\Users\Zboch\projects\blog_3\templates
+#print(BASE_DIR)
+#c:\Users\Zboch\projects\blog_3
 
 WSGI_APPLICATION = 'blog_3.wsgi.application'
 
@@ -107,6 +118,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+STATIC_PATH = os.path.join(BASE_DIR,'static')
+
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    STATIC_PATH,
+)
+
+#MEDIA_URL = '/images/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'images') # Absolute path to the images directory
 

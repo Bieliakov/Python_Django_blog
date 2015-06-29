@@ -1,0 +1,29 @@
+div {
+    color: green;
+}
+
+#dropdown_blog{
+    position: relative;
+    
+}
+
+#dropdown_div {
+    position: absolute;
+    top: bottom;
+    left: 0px;
+}
+
+ul#dropdown_list{
+    
+    margin: -1px;
+    padding: 0;
+}
+
+nav ul > li{
+    display: inline;
+}
+
+div#dropdown_div ul > li{
+    display: block;
+    width: 10em;
+}

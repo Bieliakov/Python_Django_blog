@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Index page{% endblock %}</title>
+    
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'blog/styles/bootstrap.min.css' %}" />
+</head>
+
+    <body>
+        <h1>Register with blog</h1>
+
+        {% if registered %}
+        blog says: <strong>thank you for registering!</strong>
+        <a href="/blog/">Return to the homepage.</a><br />
+        {% else %}
+        <form id="user_form" method="post" action="/blog/register/"
+                enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <!-- Display each form. The as_p method wraps each element in a paragraph
+                 (<p>) element. This ensures each element appears on a new line,
+                 making everything look neater. -->
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+
+            <!-- Provide a button to click to submit the form. -->
+            <input type="submit" name="submit" value="Register" class="btn btn-default"/>
+        </form>
+        {% endif %}
+        
+    <script>
+        
+    </script>
+    </body>
+</html>
