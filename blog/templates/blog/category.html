@@ -1,12 +1,22 @@
 {% extends "blog/index.html" %}
 
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'blog/styles/category_tag.css' %}" />
+
 {% block title %}Category page{% endblock %}
 
-{% block content %}
+{% block section %}
+    <section>
 
-        <h1>{{ category_name }}</h1>
         {% if category %}
             {% if posts %}
+                        
+                <article>
+                    <header>
+                        <h1> Category: <a href="blog/category/{{ category.slug }}">{{ category.name }}</a></h1>
+                    </header>
+                </article>
                 {% for post in posts %}
                     <article>
                         <a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a>
@@ -18,4 +28,5 @@
         {% else %}
             The specified category {{ category_name }} does not exist!
         {% endif %}
+    </section>
 {% endblock %}

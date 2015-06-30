@@ -8,4 +8,4 @@ Pillow 2.8.2 # Pillow is the “friendly PIL fork” by Alex Clark and Contribut
 django-imagekit-3.2.6
 #django-registration-redux 1.2
 #pip install python-social-auth
-python_social_auth-0.2.11
+#python_social_auth-0.2.11

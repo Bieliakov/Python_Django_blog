@@ -1,3 +1,5 @@
+
+# for resizing uploaded images
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
@@ -14,9 +16,11 @@ from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
 
+
 import datetime
 from django.utils import timezone
 
+# import standard user model
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
@@ -77,12 +81,17 @@ class Post(models.Model):
     category = models.ForeignKey(Category)
     tag = models.ManyToManyField(Tag)
     objects = EntryQuerySet.as_manager()
-    image = models.ImageField(upload_to='images/')
-    thumbnail = ImageSpecField(source='image',
-                                  processors=[ResizeToFill(100, 100)],
+    image = models.ImageField(upload_to='static/images/')
+    
+    image_thumbnail_big = ImageSpecField(source='image',
+                                  processors=[ResizeToFill(150, 150)],
                                   format='JPEG',
                                   options={'quality': 60})
-    
+                                  
+    image_thumbnail_small = ImageSpecField(source='image',
+                                  processors=[ResizeToFill(80, 80)],
+                                  format='JPEG',
+                                  options={'quality': 60})
     life = 'Lf'
     python = 'Py'
     javascript = 'JS'
@@ -118,7 +127,7 @@ class Comment(models.Model):
     body = models.TextField('Comment body')
     pub_date = models.DateTimeField('Date published', auto_now_add = True)
     modified = models.DateTimeField('Date modified', auto_now = True)
-    author = models.ForeignKey(UserProfile)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
     comment_to_post = models.ForeignKey(Post)
     
     def __str__(self):

@@ -1,29 +1,252 @@
-div {
-    color: green;
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+
+html {
+    height: 100%;
+    background-color: silver; /*change this color*/ 
+}
+
+body {
+    height: 100%;
+    font-family: 'Droid Sans', sans-serif;
+    font-size: 87.5%; /*base font size is 14px;*/
+    line-height: 2;
+    width: 90%;
+    margin: 0 auto;
+}
+
+body header nav{
+    background-color: #333;
+    height: 40px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+}
+
+body header nav ul, body footer nav ul {
+    list-style: none;
+}
+
+a:link, a:visited{
+    text-decoration: none;
+    color: steelblue;
+}
+
+a:hover, a:active{
+    color: orangered;
+}
+
+header nav ul  li{
+    display: inline;
+    float:left;
+}
+
+header nav ul  li a{
+    display: inline-block;
+    float:left;
+    background-color:#444;
+    color: white !important;
+    line-height: 20px;
+    padding: 10px 20px;
+}
+
+nav ul  li a:hover{
+    background-color:steelblue;
+}
+
+/*add this class to currently selected field*/
+nav ul  li a.selected{
+    background-color:yellowgreen;
+}
+
+main {
+    padding: 1% 0;
+}
+
+main section {
+    width: 70%;
+    float: left;
+}
+
+main section article {
+    background-color:white;
+    padding: 2%;
+    margin-bottom: 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+/*
+main section article:last-child {
+    margin-bottom: 0;
+}
+*/
+main section article header h2{
+    margin: 0;
+    font-weight: normal;
+}
+
+main section article header h1 {
+    margin: 0;
+    font-weight: normal;
+    font-size: 150%; /* for making h1 looking like h2 */
+}
+
+main section article header p {
+    margin: 0;
+    color: silver;
+    text-indent: 0;
+}
+
+main section article header h2 {
+    margin: 0;
+    padding:0;
+    text-indent: 0;
+}
+
+main section article content img {
+    float: left;
+    margin: 20px;
+}
+
+main section article content p{
+    text-indent: 15px;
+}
+
+
+
+main aside {
+    float: right;
+    width: 27%;
+    padding: 1%;
+    margin: 0 0 10px 1%;
+    background-color: white;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+/*
+main aside article {
+    
+}
+*/
+main aside article h2{
+    margin: 0;
+    font-size: 120%;
+}
+
+main aside article p{
+    text-indent: 15px;
+    font-size: 90%;
+}
+
+main aside article header p{
+    color: silver;
+}
+
+main aside article header img{
+    float:left;
+    margin: 5px 10px 5px 5px;
+}
+
+main aside{
+    clear: right;
+}
+
+main aside article:last-child {
+    margin-bottom: 0;
+}
+
+
+
+body > footer {
+    clear: both;
+    padding: 1%;
+}
+
+body > footer {
+    color: white;
+    padding: 1.5%;
+    margin-bottom: 1%;
+    background-color: #333;
+    
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+body > footer  p {
+    margin: 0;
+    font-size: 80%;
 }
 
 #dropdown_blog{
     position: relative;
-    
 }
 
 #dropdown_div {
     position: absolute;
-    top: bottom;
-    left: 0px;
+    top: 40px;
+    background-color: #444;
 }
 
 ul#dropdown_list{
     
-    margin: -1px;
+    margin: 0;
     padding: 0;
 }
-
-nav ul > li{
-    display: inline;
-}
-
 div#dropdown_div ul > li{
     display: block;
-    width: 10em;
+    width: 12em;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body {
+        width: 95%;
+    }
+}
+
+/* for smartfones (portrait and landscape) */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    body {
+        width: 100%;
+        margin-top: 40px;
+    }
+    
+    header nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+    }
+    
+    header nav ul {
+        margin: 0;
+        padding: 0;
+    }
+    
+    header nav a {
+        padding: 10px 15px;
+    }
+    
+    main section {
+        width: 100%;
+        float: none;
+    }
+    
+    main section article {
+        margin-bottom: 1%;
+    }
+    
+    main aside {
+        width: 100%;
+        float: none;
+        margin: 1% 0;
+        padding: 1%;
+    }
+
 }

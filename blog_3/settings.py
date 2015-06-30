@@ -38,8 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
-    
+    #'social.apps.django_app.default',
 )
+# 'social.apps.django_app.default' - is for registration via social networks
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,10 +66,35 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
 ]
+
+# http://artandlogic.com/2014/04/tutorial-adding-facebooktwittergoogle-authentication-to-a-django-application/
+# for registration via social networks:
+#TEMPLATE_CONTEXT_PROCESSORS = (
+#   'django.contrib.auth.context_processors.auth',
+#   'django.core.context_processors.debug',
+#  'django.core.context_processors.i18n',
+#   'django.core.context_processors.media',
+#   'django.core.context_processors.static',
+#   'django.core.context_processors.tz',
+#   'django.contrib.messages.context_processors.messages',
+#   'social.apps.django_app.context_processors.backends',
+#   'social.apps.django_app.context_processors.login_redirect',
+#)
+#
+#AUTHENTICATION_BACKENDS = (
+#   'social.backends.facebook.FacebookOAuth2',
+#   'social.backends.google.GoogleOAuth2',
+#   'social.backends.twitter.TwitterOAuth',
+#   'django.contrib.auth.backends.ModelBackend',
+#)
+
+#SOCIAL_AUTH_FACEBOOK_KEY = '686268061503894'
+#SOCIAL_AUTH_FACEBOOK_SECRET = '53c3c5242361318dc14c8e09bb60540e'
 
 # next two lines is under question
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
@@ -86,15 +112,12 @@ WSGI_APPLICATION = 'blog_3.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+# in my.cnf file is stored mysql database properties
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bu_blog',
-        'USER': 'root',
-        'PASSWORD': ';bpym;bpym55',
-        'HOST': 'localhost',
-        'PORT': '3306',
         'OPTIONS': {
+            'read_default_file': 'c:/Program Files/MySQL/MySQL Server 5.5/my.cnf',
             'init_command': 'SET storage_engine=INNODB',
         },
     }
@@ -124,6 +147,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     STATIC_PATH,
+    '',
 )
 
 #MEDIA_URL = '/images/'

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %}Index page{% endblock %}</title>
+    <title>{% block title %}Index(blog) page{% endblock %}</title>
     
 {% load staticfiles %}
     
@@ -9,12 +9,26 @@
     <!--[if IE 9]><!--><script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script><!--<![endif]-->
     <!--<link rel="stylesheet" type="text/css" href="{% static 'blog/styles/bootstrap.min.css' %}" />-->   
     <link rel="stylesheet" type="text/css" href="{% static 'blog/styles/style.css' %}" />
-
     
+    <!--sharing via vkontakte button-->
+    <script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
+    <!--end sharing via vkontakte button-->
 </head>
 
 <body>
 
+<!--sharing via facebook button-->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.3&appId=686268061503894";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!--end sharing via facebook button-->
+
+{% block header %}
 <script type="text/javascript"> 
                     var categories = {};
 </script>
@@ -31,7 +45,7 @@
 <header class='container'>
     <nav class='row'>
         <ul class='col-md-12 col-sm-12'>
-            <li><a href="{% url 'blog:index'%}">Home</a></li>
+            <li><a href="{% url 'blog:index'%}" class='selected'>Home</a></li>
             <li id='dropdown_blog'><a href="{% url 'blog:index'%}" >Blog >></a></li>
             
             {% if user.is_authenticated %}
@@ -43,25 +57,30 @@
         </ul>
     </nav>
 </header>
+
+{% endblock %} <!--header-->
+
+{% block main %}
+
 <main  class='container'>
+    {% block section %}
     <section class='row col-md-8'>
-    {% block content %}
         {% if latest_post_list %}
-                    <script type="text/javascript"> 
+                    <!--<script type="text/javascript"> 
                         var tags = [];
 
-                    </script>
+                    </script>-->
             {% for post in latest_post_list %}
                 <article>
                     <header>
-                        <h1><a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a></h1>
-
+                        <h2><a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a></h2>
+                        <p>Posted by {{ post.author}} on {{ post.pub_date }} in {{ post.category }}</p>
                     </header>
                     <content>
-                        <img src="{% static post.image.url %}"/>
-                        <img src="{% static post.thumbnail.url %}"/>
+                         <!--<img src="{% static post.image.url %}"/>-->
+                        <img src="{% static post.image_thumbnail_big.url %}"/>
                         
-                        <div>{{ post.body }}</div>
+                        <p>{{ post.body|truncatechars:800 }}</p>
                          <!--   <script type="text/javascript"> 
                                 var categories = {{ post.category}};
                             </script>-->
@@ -71,16 +90,16 @@
                     <footer class="tags">tags:
 
                     {% for tag in post.tag.all %}
-                        <script type="text/javascript"> 
+                        <!--<script type="text/javascript"> 
 
                             tags.push('{{ tag.name }}');
 
-                        </script>
+                        </script>-->
                         <a href="tag/{{ tag.slug }}">{{ tag.name }}</a>
                         {% if not forloop.last %}, {% endif %}
                     {% endfor %}
 
-                        <p>Posted by {{ post.author}} on {{ post.pub_date }} in {{ post.category }}</p>
+                        
                     <!--<a href="/blog/category/{{ post.category }}">{{ post.category }}</a>-->
                     </footer>
                      
@@ -92,28 +111,55 @@
         {% else %}
             <p>No posts are available.</p>
         {% endif %}
-    {% endblock %}
+    
     </section>
-
+    {% endblock %} <!--section-->
+    {% block aside %}
     <aside class='row col-md-4'>
+        {% block first_aside %}
+        <p>Categories: </p>
+        {% for category in categories %}
         <article>
-            <h2>Aside post header 1</h2>
-            <p>Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body.</p>
-        
+            <header>
+                
+                <h2><a href="{% url 'blog:category' category.slug %}">{{category.name}}</a></h2>
+            </header>
         </article>
+        {% endfor %}
+        {% endblock %} <!--first_aside-->
+    </aside>
+    <aside>
+        <p>Recent posts: </p>
+        {% for post in three_last_posts %}
+        
         <article>
-            <h2>Aside post header 2</h2>
-            <p>Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body.</p>
-        
+            <header>
+                <img src="{% static post.image_thumbnail_small.url %}"/>
+                <h2><a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a></h2>
+                <p>{{ post.pub_date }} in {{ post.category }}</p>
+            </header>
+            <content>
+                 <!--<img src="{% static post.image.url %}"/>-->
+                
+                
+                <p>{{ post.body|truncatechars:150 }}</p>
+                
+            </content>   
         </article>
+        {% endfor %}
+    </aside>
+    <aside>
         <article>
             <h2>Aside post header 3</h2>
             <p>Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body.</p>
 
         </article>
     </aside>
+    {% endblock %} <!--aside-->
 </main>
+{% endblock %} <!--main-->
 
+{% block footer %}
 <footer class='container'>
     <nav class='row'>
         <ul class='col-md-12 col-sm-12'>
@@ -128,9 +174,13 @@
             {% endif %}
         </ul>
     </nav>
+    <p>&copy; Copyright 2015, <a href='#'>my website</a>
+    </p>
 <footer>
 
 <script type="text/javascript" src="{% static 'blog/scripts/main.js' %}"></script>
+
+{% endblock %} <!--footer-->
 
 </body>
 </html>

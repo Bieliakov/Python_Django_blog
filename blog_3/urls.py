@@ -21,6 +21,8 @@ from django.conf import settings
 urlpatterns = [
     url(r'^blog/', include('blog.urls', namespace="blog")), # added
     url(r'^admin/', include(admin.site.urls)),
+    
+    #url(r'', include('social.apps.django_app.urls', namespace='social')),
 ]
 '''
 if settings.DEBUG:

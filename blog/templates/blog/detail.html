@@ -1,36 +1,61 @@
 ﻿{% extends "blog/index.html" %}
 
-{% block title %}Detail page{% endblock %}
+{% block title %}{{ post.title }}{% endblock %}
 
 {% load staticfiles %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/styles/style.css' %}" />
+
     
-<section>    
-{% block content %}
+{% block section %}    
+    
+    <section>
+        <article>
+            <header>
+                
+                <h1><a href="#">{{ post.title }}</a></h1>
+                <p>Posted by {{ post.author}} on {{ post.pub_date }} in {{ post.category }}</p>
+            </header>
+            <content>
+                <img src="{% static post.image_thumbnail_big.url %}"/>
+                <p>
+                    {{ post.body }}
+                </p>
+            </content>
+            <footer>
+                tags:
+                {% for tag in post.tag.all %}
+                        <a href="tag/{{ tag.slug }}">{{ tag.name }}</a>
+                     {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                
+                
+                    <!--sharing via vkontakte button-->
+                    <script type="text/javascript">
 
-    <article>
-        <div class='post_header'>
-            <h1>{{ post.title }}</h1>
-            <div> Posted by {{ post.author}} on {{ post.pub_date }} in {{ post.category }}</div>
-
-        </div>
-
-        <div>
-            {{ post.body }}
-        </div>
-
-        <ul>
-        {% for comment in post.comment_set.all %}
-            <li>
-                <div> {{ comment.author }} {{ comment.pub_date}}</div>
+                    <!--
+                    document.write(VK.Share.button(false, {type: 'button', text: 'Share'}));
+                    --> 
+                   
+                    </script>
+                    <!--end sharing via vkontakte button-->
+                    
+                    <!--sharing via facebook button-->
+                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
+                    <!--end sharing via facebook button-->
+            </footer>
             
-                <div>{{ comment.body }}</div>
-            
-            </li>
-        {% endfor %}
-        </ul>
-    </article>    
+            <ul>
+            {% for comment in post.comment_set.all %}
+                <li>
+                    <p> {{ comment.author }} {{ comment.pub_date}}</p>
+                
+                    <p>{{ comment.body }}</p>
+                
+                </li>
+            {% endfor %}
+            </ul>
+        </article>    
+    </section>
 {% endblock %}
     
-</section>
