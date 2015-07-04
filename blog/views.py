@@ -42,8 +42,9 @@ def home(request):
     
     return render(request, 'blog/index.html', { 'latest_post_list': latest_post_list, 'categories': categories})
 '''
-
+# there might be some issues with the following lines
 categories = Category.objects.all()
+tags = Tag.objects.all()
 three_last_posts = Post.objects.order_by('-pub_date')[:3]
 
 # Use the login_required() decorator to ensure only those logged in can access the view.
@@ -70,6 +71,9 @@ def register(request):
 
         # If the two forms are valid...
         if user_form.is_valid() and profile_form.is_valid():
+            
+
+            
             # Save the user's form data to the database.
             user = user_form.save()
 
@@ -148,20 +152,20 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'blog/login.html', {})
-
+#add page 
 def index(request):
     latest_post_list = Post.objects.order_by('-pub_date')[:5]
     #categories = []
     #for post in latest_post_list:
     #    category = Category.objects.select_related().get(slug=category_slug)
    
-    return render(request, 'blog/index.html', { 'latest_post_list': latest_post_list, 'categories': categories, 'three_last_posts': three_last_posts})
+    return render(request, 'blog/index.html', { 'latest_post_list': latest_post_list, 'categories': categories, 'three_last_posts': three_last_posts, 'tags': tags})
 
 def detail(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
     #categories_intermediate = Post_has_categories.objects.filter(post_id_id=post_id) 
 
-    return render(request, 'blog/detail.html', {'post': post, 'categories': categories, 'three_last_posts': three_last_posts})
+    return render(request, 'blog/detail.html', {'post': post, 'categories': categories, 'three_last_posts': three_last_posts, 'tags': tags})
 
     
     
@@ -169,7 +173,7 @@ def category(request, category_slug):
     category = Category.objects.select_related().get(slug=category_slug)
     posts = category.post_set.all()
     
-    return render(request, 'blog/category.html', {'posts': posts, 'category': category, 'categories': categories, 'three_last_posts': three_last_posts})
+    return render(request, 'blog/category.html', {'posts': posts, 'category': category, 'categories': categories, 'three_last_posts': three_last_posts, 'tags': tags})
 
     '''
     # Create a context dictionary which we can pass to the template rendering engine.
@@ -214,7 +218,7 @@ def tag (request, tag_slug):
     tag = Tag.objects.select_related().get(slug=tag_slug)
     posts = tag.post_set.all()
 
-    return render(request, 'blog/tagpage.html', {'posts': posts, 'tag': tag, 'categories': categories, 'three_last_posts': three_last_posts})
+    return render(request, 'blog/tagpage.html', {'posts': posts, 'tag': tag, 'categories': categories, 'three_last_posts': three_last_posts, 'tags': tags})
 
 
 def comment(request, post_id):

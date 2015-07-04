@@ -149,11 +149,12 @@
         {% endfor %}
     </aside>
     <aside>
-        <article>
-            <h2>Aside post header 3</h2>
-            <p>Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body. Aside text post body.</p>
-
-        </article>
+        <p>Tags:</p>
+        {% for tag in tags %}
+                        
+            <a href="tag/{{ tag.slug }}">{{ tag.name }}</a>
+            {% if not forloop.last %}, {% endif %}
+        {% endfor %}
     </aside>
     {% endblock %} <!--aside-->
 </main>

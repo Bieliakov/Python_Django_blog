@@ -12,7 +12,7 @@
                         
                 <article>
                     <header>
-                        <h1> Posts for the tag <a href="blog/tag/{{ tag.slug }}">{{ tag.name }}</a></h1>
+                        <h1> Posts for the tag <a href="{{ tag.slug }}">{{ tag.name }}</a></h1>
                     </header>
                 </article>
                 {% for post in posts %}

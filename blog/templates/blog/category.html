@@ -14,7 +14,7 @@
                         
                 <article>
                     <header>
-                        <h1> Category: <a href="blog/category/{{ category.slug }}">{{ category.name }}</a></h1>
+                        <h1> Category: <a href="{{ category.slug }}">{{ category.name }}</a></h1>
                     </header>
                 </article>
                 {% for post in posts %}

@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
+# import file for getting secret keys information (for security reasons)
+from blog_secret_keys import SECRET_KEY, SOCIAL_AUTH_FACEBOOK_KEY, SOCIAL_AUTH_FACEBOOK_SECRET
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -20,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'si9v7yn-zd@4uj&ohua8eh5@f-hu@i4uync2#4e)14r1zo$bvf'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -93,8 +95,7 @@ TEMPLATES = [
 #   'django.contrib.auth.backends.ModelBackend',
 #)
 
-#SOCIAL_AUTH_FACEBOOK_KEY = '686268061503894'
-#SOCIAL_AUTH_FACEBOOK_SECRET = '53c3c5242361318dc14c8e09bb60540e'
+# here goes importing SOCIAL_AUTH_FACEBOOK_KEY and SOCIAL_AUTH_FACEBOOK_SECRET
 
 # next two lines is under question
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')

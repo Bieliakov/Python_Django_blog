@@ -92,6 +92,7 @@ class Post(models.Model):
                                   processors=[ResizeToFill(80, 80)],
                                   format='JPEG',
                                   options={'quality': 60})
+    # delete following rows
     life = 'Lf'
     python = 'Py'
     javascript = 'JS'
