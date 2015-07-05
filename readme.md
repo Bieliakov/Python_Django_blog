@@ -1,4 +1,4 @@
-Hi everyone! My name is Serhii and this is my project's repository. I work on the project during my studying in Bionic University (Python Web direction). The project - is my personal blog. Technologies that I'm using are the following ones:
+Hi everyone! My name is Serhii and this is my project's repository. I'm working on the project during my studying in Bionic University (Python Web direction). The project - is my personal blog. Technologies that I'm using are the following ones:
 
 On the server-side:
 - Python 3.4.3;
