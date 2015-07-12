@@ -1,28 +1,17 @@
 jQuery(document).ready(function(){
-    /* improve this function for manipulation elements not using DOM tree*/
-    $('#dropdown_blog').append('<div id="dropdown_div"></div>');
-
-    $('#dropdown_div').hide().append('<ul id="dropdown_list"></ul>');
-
-    $blog_dropdown_list = $('ul#dropdown_list');
-    
-    for (var name in categories) {
-        if (categories.hasOwnProperty(name)) {
-
-            $blog_dropdown_list.append('<li><a href="category/' + categories[name] + '">' + name + '</a></li>');
-
-        }
-    };
-    
-    $('#dropdown_blog').hover(function(){
-        console.log('in')
-        $('#dropdown_div').fadeIn()
-        
+    $('#dropdown_blog_top').hover(function(){
+        $('#dropdown_list_top').fadeIn(); /* a bit of WET */
+        $('#dropdown_div_top').fadeIn();
     }, function(){
-        $('#dropdown_div').fadeOut()
-        console.log('out')
+        $('#dropdown_list_top').fadeOut();
+        $('#dropdown_div_top').fadeOut();
     });
-
-
-
+    
+    $('#dropdown_blog_bottom').hover(function(){
+        $('#dropdown_list_bottom').fadeIn(); /* a bit of WET */
+        $('#dropdown_div_bottom').fadeIn();
+    }, function(){
+        $('#dropdown_list_bottom').fadeOut();
+        $('#dropdown_div_bottom').fadeOut();
+    });
 });

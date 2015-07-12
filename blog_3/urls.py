@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.conf import settings
 
 urlpatterns = [
+    url(r'^', include('blog.urls_home_page', namespace="home")), # for homepage and about_me page
     url(r'^blog/', include('blog.urls', namespace="blog")), # added
     url(r'^admin/', include(admin.site.urls)),
     

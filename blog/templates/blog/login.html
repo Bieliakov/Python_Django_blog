@@ -20,3 +20,29 @@
 
     </body>
 </html>
+
+<!-- place this part into index.html if you want to implement registration
+
+    {% if user.is_authenticated %}
+    <li><a href="/blog/logout/">Logout</a></li>
+    {% else %}
+    <li><a href="/blog/register/">Register Here</a></li>
+    <li><a href="/blog/login/">Login</a></li>
+    {% endif %}
+            
+-->
+
+<!-- this is for comments
+            
+    <ul>
+    {% for comment in post.comment_set.all %}
+        <li>
+            <p> {{ comment.author }} {{ comment.pub_date}}</p>
+        
+            <p>{{ comment.body }}</p>
+        
+        </li>
+    {% endfor %}
+    </ul>
+
+-->

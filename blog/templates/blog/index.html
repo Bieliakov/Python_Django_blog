@@ -1,8 +1,10 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+{% block head %}
     <title>{% block title %}Index(blog) page{% endblock %}</title>
+
     
+{% endblock %}
 {% load staticfiles %}
     
     <!--[if lt IE 9]><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><![endif]-->
@@ -13,6 +15,9 @@
     <!--sharing via vkontakte button-->
     <script type="text/javascript" src="http://vk.com/js/api/share.js?90" charset="windows-1251"></script>
     <!--end sharing via vkontakte button-->
+    <meta name='viewport' content='width=device-width, initial-scale=1 user-scalable=no'/>
+    
+    
 </head>
 
 <body>
@@ -29,31 +34,29 @@
 <!--end sharing via facebook button-->
 
 {% block header %}
-<script type="text/javascript"> 
-                    var categories = {};
-</script>
-{% for category in categories %}
-    <script type="text/javascript"> 
-    
-                    categories['{{category.name}}'] = '{{category.slug}}';
-</script>
-{% endfor %}
-    <script type="text/javascript"> 
-                    console.log(categories);
-</script>
 
 <header class='container'>
-    <nav class='row'>
-        <ul class='col-md-12 col-sm-12'>
-            <li><a href="{% url 'blog:index'%}" class='selected'>Home</a></li>
-            <li id='dropdown_blog'><a href="{% url 'blog:index'%}" >Blog >></a></li>
-            
-            {% if user.is_authenticated %}
-            <li><a href="/blog/logout/">Logout</a></li>
-            {% else %}
-            <li><a href="/blog/register/">Register Here</a></li>
-            <li><a href="/blog/login/">Login</a></li>
-            {% endif %}
+    <!--logo
+        images/raduga.jpeg
+    -->
+    <img src="http://kevingrandon.github.io/slides-fxos-technical-overview/img/web-logos.png" alt='logo' />
+   
+    <nav>
+        <ul>
+            <li><a href="/" class='selected'>Home</a></li>
+            <li id='dropdown_blog_top'>
+                <a href="{% url 'blog:index'%}" >Blog >></a>
+                <div id="dropdown_div_top">
+                    <ul id="dropdown_list_top">
+                        {% for category in categories %}
+                        <li><a href="{% url 'blog:category' category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+            </li>
+            <li><a href="{% url 'home:about_me'%}">About me</a></li>
+
         </ul>
     </nav>
 </header>
@@ -74,27 +77,23 @@
                 <article>
                     <header>
                         <h2><a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a></h2>
-                        <p>Posted by {{ post.author}} on {{ post.pub_date }} in {{ post.category }}</p>
+                        <p>Posted by {{ post.author }} on {{ post.pub_date | date }} in <a href="{% url 'blog:detail' post.slug %}">{{ post.category }}</a> category</p>
                     </header>
                     <content>
                          <!--<img src="{% static post.image.url %}"/>-->
-                        <img src="{% static post.image_thumbnail_big.url %}"/>
+                        <img src="{% static post.image.url %}"/>
                         
-                        <p>{{ post.body|truncatechars:800 }}</p>
-                         <!--   <script type="text/javascript"> 
-                                var categories = {{ post.category}};
-                            </script>-->
+                        <p>{{ post.body|truncatechars:800 }}                        <a href="{% url 'blog:detail' post.slug %}">
+                            <button type="button" class='btn'>Read more</button>
+                        </a></p>
+
 
                         
                     </content>   
                     <footer class="tags">tags:
 
                     {% for tag in post.tag.all %}
-                        <!--<script type="text/javascript"> 
 
-                            tags.push('{{ tag.name }}');
-
-                        </script>-->
                         <a href="tag/{{ tag.slug }}">{{ tag.name }}</a>
                         {% if not forloop.last %}, {% endif %}
                     {% endfor %}
@@ -105,9 +104,7 @@
                      
                 </article>
             {% endfor %}
-                    <!--<script type="text/javascript"> 
-                            console.log(tags)
-                    </script>-->
+
         {% else %}
             <p>No posts are available.</p>
         {% endif %}
@@ -128,22 +125,25 @@
         {% endfor %}
         {% endblock %} <!--first_aside-->
     </aside>
-    <aside>
+    <aside class='aside_recent_posts'>
         <p>Recent posts: </p>
         {% for post in three_last_posts %}
         
         <article>
             <header>
-                <img src="{% static post.image_thumbnail_small.url %}"/>
+                <img src="{% static post.image.url %}"/>
                 <h2><a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a></h2>
-                <p>{{ post.pub_date }} in {{ post.category }}</p>
+                <p>{{ post.pub_date | date }} in <a href="{% url 'blog:detail' post.slug %}">{{ post.category }}</a> category</p>
             </header>
             <content>
                  <!--<img src="{% static post.image.url %}"/>-->
-                
-                
-                <p>{{ post.body|truncatechars:150 }}</p>
-                
+
+                <p>{{ post.body|truncatechars:150 }}
+                    <a href="{% url 'blog:detail' post.slug %}">
+                        <button type=  "button" class='btn'>Read more</button>
+                    </a>
+                </p>
+
             </content>   
         </article>
         {% endfor %}
@@ -151,8 +151,7 @@
     <aside>
         <p>Tags:</p>
         {% for tag in tags %}
-                        
-            <a href="tag/{{ tag.slug }}">{{ tag.name }}</a>
+            <a href="{% url 'blog:tag' tag.slug %}">{{ tag.name }}</a>
             {% if not forloop.last %}, {% endif %}
         {% endfor %}
     </aside>
@@ -162,22 +161,26 @@
 
 {% block footer %}
 <footer class='container'>
-    <nav class='row'>
-        <ul class='col-md-12 col-sm-12'>
-            <li><a href="{% url 'blog:index'%}">Home</a></li>
-            <li id='dropdown_blog'><a href="{% url 'blog:index'%}" >Blog >></a></li>
-            
-            {% if user.is_authenticated %}
-            <li><a href="/blog/logout/">Logout</a></li>
-            {% else %}
-            <li><a href="/blog/register/">Register Here</a></li>
-            <li><a href="/blog/login/">Login</a></li>
-            {% endif %}
+    <nav>
+        <ul>
+            <li><a href="/" class='selected'>Home</a></li>
+            <li id='dropdown_blog_bottom'>
+                <a href="{% url 'blog:index'%}" >Blog >></a>
+                <div id="dropdown_div_bottom">
+                    <ul id="dropdown_list_bottom">
+                        {% for category in categories %}
+                        <li><a href="{% url 'blog:category' category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+            </li>
+            <li><a href="{% url 'home:about_me'%}">About me</a></li>
+
         </ul>
     </nav>
-    <p>&copy; Copyright 2015, <a href='#'>my website</a>
-    </p>
-<footer>
+    <p>&copy; Copyright 2015, <a href='#'>my website</a></p>
+</footer>
 
 <script type="text/javascript" src="{% static 'blog/scripts/main.js' %}"></script>
 

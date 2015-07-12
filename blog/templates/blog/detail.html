@@ -1,6 +1,16 @@
 ﻿{% extends "blog/index.html" %}
 
-{% block title %}{{ post.title }}{% endblock %}
+{% block head %}
+    <meta name="author" content="Serhii Bieliakov" />
+    <meta name="keywords" content="{% for tag in post.tag.all %}{{ tag.name }}{% if not forloop.last %}, {% endif %}{% endfor %}" />
+    <meta name="description" content="{{ post.snippet }}" />
+    <!-- I should check this out
+    <meta name="google-site-verification" content="mEo_suS-oh8CIK1g_f4zyh_J4xPrngx5UDViww2R974" />-->
+    <title>{{ post.title }}</title>
+    
+    
+{% endblock %}
+
 
 {% load staticfiles %}
 
@@ -44,17 +54,7 @@
                     <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
                     <!--end sharing via facebook button-->
             </footer>
-            
-            <ul>
-            {% for comment in post.comment_set.all %}
-                <li>
-                    <p> {{ comment.author }} {{ comment.pub_date}}</p>
-                
-                    <p>{{ comment.body }}</p>
-                
-                </li>
-            {% endfor %}
-            </ul>
+
         </article>    
     </section>
 {% endblock %}

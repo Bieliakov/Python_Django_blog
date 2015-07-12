@@ -1,20 +1,46 @@
+/* 
+- add max-width properties for big screens
+- maybe breakpoints for aside block
+
+- поправить горизонтальній скролл при просмотре на мобилках
+*/
+
+
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
 
 html {
     height: 100%;
-    background-color: silver; /*change this color*/ 
+   
 }
 
 body {
     height: 100%;
+    background-color: silver; /*change this color*/ 
     font-family: 'Droid Sans', sans-serif;
     font-size: 87.5%; /*base font size is 14px;*/
     line-height: 2;
-    width: 80%;
+    width: 70%;
+    max-width: 1024px; /* for large screens */
     margin: 0 auto;
+    
 }
 
-body header nav{
+a:link, a:visited{
+    text-decoration: none;
+    color: steelblue;
+}
+
+a:hover, a:active{
+    color: orangered;
+}
+
+body header > img{
+    width: 30%;
+    height: auto;
+    margin-bottom: -20px;
+}
+
+body header > nav, body footer > nav {
     background-color: #333;
     height: 40px;
     -moz-border-radius: 5px;
@@ -27,23 +53,13 @@ body header nav ul, body footer nav ul {
     list-style: none;
 }
 
-a:link, a:visited{
-    text-decoration: none;
-    color: steelblue;
-}
-
-a:hover, a:active{
-    color: orangered;
-}
-
-header nav ul  li{
+header nav ul  > li, footer nav ul  > li{
     display: inline;
     float:left;
 }
 
-header nav ul  li a{
+header nav ul  li a, footer nav ul  li a {
     display: inline-block;
-    float:left;
     background-color:#444;
     color: white !important;
     line-height: 20px;
@@ -76,21 +92,26 @@ main section article {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
+
+
 /*
 main section article:last-child {
     margin-bottom: 0;
 }
 */
+
 main section article header h2{
     margin: 0;
     font-weight: normal;
 }
 
+/* for detail.html page */
 main section article header h1 {
     margin: 0;
     font-weight: normal;
     font-size: 150%; /* for making h1 looking like h2 */
 }
+/* end for*/
 
 main section article header p {
     margin: 0;
@@ -104,16 +125,16 @@ main section article header h2 {
     text-indent: 0;
 }
 
+/* update and add img properties */
 main section article content img {
     float: left;
     margin: 20px;
+    width: 30%;
 }
 
 main section article content p{
     text-indent: 15px;
 }
-
-
 
 main aside {
     float: right;
@@ -125,11 +146,31 @@ main aside {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
-/*
-main aside article {
-    
+
+main aside > p {
+    margin:0;
+    font-weight: 600;
 }
-*/
+/* maybe change clear property */
+main aside article {
+    clear: both;
+
+}
+
+
+
+main aside.aside_recent_posts article:nth-child(n+3) {
+    border-top: 1px solid silver;
+}
+/*
+main aside.aside_recent_posts > article:first-child {
+    border-top: 0 none;
+}
+ */   
+main aside.aside_recent_posts article content > p {
+    margin-bottom: 3em;
+}
+    
 main aside article h2{
     margin: 0;
     font-size: 120%;
@@ -142,78 +183,156 @@ main aside article p{
 
 main aside article header p{
     color: silver;
+    margin: 0;
+    font-size: 80%;
+    text-indent:0;
 }
 
+main aside article content{
+    margin: 0;
+}
+
+/* change this maybe */ 
 main aside article header img{
     float:left;
     margin: 5px 10px 5px 5px;
+    width: 30%;
 }
 
 main aside{
     clear: right;
 }
-
+/*
 main aside article:last-child {
     margin-bottom: 0;
-}
-
-
+}*/
 
 body > footer {
     clear: both;
-    padding: 1%;
 }
-
+/*
 body > footer {
     color: white;
     padding: 1.5%;
     margin-bottom: 1%;
     background-color: #333;
-    
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
-
+*/
 body > footer  p {
+    float: right;
+    padding: 1%;
     margin: 0;
-    font-size: 80%;
+    font-size: 90%;
 }
 
-#dropdown_blog{
+/* a bit WET */
+ul#dropdown_list_top, ul#dropdown_list_bottom {
+    display: none;
+}
+
+ul#dropdown_list_top li a , ul#dropdown_list_bottom li a  {
+    width: 100%;
+    padding: 10px 0;
+    text-indent: 20px;
+}
+
+#dropdown_blog_top, #dropdown_blog_bottom {
     position: relative;
 }
 
-#dropdown_div {
+#dropdown_div_top{
     position: absolute;
     top: 40px;
     background-color: #444;
 }
+#dropdown_div_bottom {
+    position: absolute;
+    bottom:100%;
+    background-color: #444;
+}
 
-ul#dropdown_list{
-    
+ul#dropdown_list_top, ul#dropdown_list_bottom {
     margin: 0;
     padding: 0;
 }
-div#dropdown_div ul > li{
+div#dropdown_div_top ul > li, div#dropdown_div_bottom ul > li{
     display: block;
     width: 12em;
 }
+/* end WET */
+.btn {
+    opacity: 0.6;
+    display: block;
+    float: right;
+    margin-left: 10px;
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 18;
+    -moz-border-radius: 18;
+    border-radius: 18px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 5px 12px 5px 12px;
+    text-decoration: none;
+}
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+.btn:hover {
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+    text-decoration: none;
+}
+
+/* for about_me page */
+h2#my_name {
+    line-height: 1.2;
+}
+/* end for :)*/
+
+@media only screen and (min-width: 480px) and (max-width: 1024px) {
     body {
-        width: 95%;
+        width: 100%;
+    }
+    
+    body > header img {
+        width: 40%;
+    }
+    
+    main aside.aside_recent_posts{
+        display: none;
     }
 }
 
 /* for smartfones (portrait and landscape) */
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+    
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
     body {
         width: 100%;
         margin-top: 40px;
     }
     
-    header nav {
+    body > header img {
+        width: 100%;
+    }
+    
+    body > header nav {
         position: fixed;
         top: 0;
         width: 100%;
@@ -224,13 +343,26 @@ div#dropdown_div ul > li{
         border-radius: 0;
     }
     
-    header nav ul {
+    body > footer nav {
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        border-radius: 0;
+    }
+    
+    body > header nav ul, body > footer nav ul {
         margin: 0;
         padding: 0;
     }
     
-    header nav a {
+    body > header nav ul li a, body > footer nav ul li a {
         padding: 10px 15px;
+    }
+    
+    body > footer nav {
+        display: none;
     }
     
     main section {
@@ -239,7 +371,12 @@ div#dropdown_div ul > li{
     }
     
     main section article {
+        width: 100%;
         margin-bottom: 1%;
+    }
+    
+    main section article content img{
+        margin: 10px;
     }
     
     main aside {
@@ -247,6 +384,10 @@ div#dropdown_div ul > li{
         float: none;
         margin: 1% 0;
         padding: 1%;
+    }
+    
+    main aside.aside_recent_posts{
+        display: none;
     }
 
 }

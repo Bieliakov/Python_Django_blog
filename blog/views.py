@@ -1,16 +1,14 @@
 from django.shortcuts import get_object_or_404, render
 
-# Create your views here.
+# from django.views import generic
 
-from django.views import generic
+from .models import Post, Category, Tag
 
-from .models import Post, Category,Tag
+# from blog.forms import UserForm, UserProfileForm
 
-from blog.forms import UserForm, UserProfileForm
-
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth import authenticate, login, logout
+# from django.http import HttpResponseRedirect, HttpResponse
+# from django.contrib.auth.decorators import login_required
 '''
 Write your views¶
 
@@ -42,11 +40,126 @@ def home(request):
     
     return render(request, 'blog/index.html', { 'latest_post_list': latest_post_list, 'categories': categories})
 '''
-# there might be some issues with the following lines
-categories = Category.objects.all()
-tags = Tag.objects.all()
-three_last_posts = Post.objects.order_by('-pub_date')[:3]
 
+# get common data to all pages
+def get_common_data():
+    categories = Category.objects.all()
+    tags = Tag.objects.all()
+    three_last_posts = Post.objects.order_by('-pub_date')[:3]
+    common_data = {'categories': categories, 'tags': tags, 'three_last_posts': three_last_posts}
+    return common_data
+
+def home(request):
+    context_dict = {}
+    latest_post_list = Post.objects.order_by('-pub_date')[:10]
+    context_dict['latest_post_list'] = latest_post_list
+    common_data = get_common_data()
+    for key in common_data:
+        context_dict[key] = common_data[key]
+    return render(request, 'blog/home.html', context_dict)
+    
+def about_me(request):
+    context_dict = {}
+    latest_post_list = Post.objects.order_by('-pub_date')[:10]
+    context_dict['latest_post_list'] = latest_post_list
+    common_data = get_common_data()
+    for key in common_data:
+        context_dict[key] = common_data[key]
+    return render(request, 'blog/about_me.html', context_dict)
+    
+#add page 
+def index(request):
+    # Create a context dictionary which we can pass to the template rendering engine.
+    context_dict = {}
+    latest_post_list = Post.objects.order_by('-pub_date')[:10]
+    context_dict['latest_post_list'] = latest_post_list
+    common_data = get_common_data()
+    for key in common_data:
+        context_dict[key] = common_data[key]
+    #categories = []
+    #for post in latest_post_list:
+    #    category = Category.objects.select_related().get(slug=category_slug)
+    return render(request, 'blog/index.html', context_dict)
+
+def detail(request, post_slug):
+    context_dict = {}
+    post = get_object_or_404(Post, slug=post_slug)
+    context_dict['post'] = post
+    common_data = get_common_data()
+    for key in common_data:
+        context_dict[key] = common_data[key]
+    #categories_intermediate = Post_has_categories.objects.filter(post_id_id=post_id) 
+
+    return render(request, 'blog/detail.html', context_dict)
+
+    
+    
+def category(request, category_slug):
+    context_dict = {}
+    category = Category.objects.select_related().get(slug=category_slug)
+    posts = category.post_set.all()
+    context_dict['category'] = category
+    context_dict['posts'] = posts
+    common_data = get_common_data()
+    for key in common_data:
+        context_dict[key] = common_data[key]
+    
+    return render(request, 'blog/category.html', context_dict)
+
+    '''
+    
+    context_dict = {}
+    
+    try:
+        # Can we find a category name slug with the given name?
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        # So the .get() method returns one model instance or raises an exception.
+        category = Category.objects.get(slug=category_slug)
+        context_dict['category_name'] = category.name
+        
+        # Retrieve all of the associated pages.
+        # Note that filter returns >= 1 model instance.
+        posts = Post.objects.filter(category=category)
+        
+        # Adds our results list to the template context under name pages.
+        context_dict['posts'] = posts
+        # We also add the category object from the database to the context dictionary.
+        # We'll use this in the template to verify that the category exists.
+        context_dict['category'] = category
+    except Category.DoesNotExist:
+        # We get here if we didn't find the specified category.
+        # Don't do anything - the template displays the "no category" message for us.
+        pass
+    
+    # Go render the response and return it to the client.
+    return render(request, 'blog/category.html', context_dict)
+    # делаем выборку выбранной категории
+    '''
+    '''category = get_object_or_404(Category, slug = 'new-category')
+    #category = Category.objects.select_related().get(slug = category_slug) 
+    # выбираем все статьи по выбранной категории
+    posts = category.post_set.all() 
+    # возвращаем выбранную категорию и статьи в шаблон category.html
+    return render(request, 'category.html', {'posts': posts, 
+                                            'category': category})
+    '''
+
+
+def tag (request, tag_slug):
+    context_dict = {}
+    tag = Tag.objects.select_related().get(slug=tag_slug)
+    posts = tag.post_set.all()
+    context_dict['tag'] = tag
+    context_dict['posts'] = posts
+    common_data = get_common_data()
+    for key in common_data:
+        context_dict[key] = common_data[key]
+    
+    return render(request, 'blog/tagpage.html', context_dict)
+
+# for registration and ligging in implementation (I don't need it because I use disqus comment framework)
+
+'''
 # Use the login_required() decorator to ensure only those logged in can access the view.
 @login_required
 def user_logout(request):
@@ -152,80 +265,11 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'blog/login.html', {})
-#add page 
-def index(request):
-    latest_post_list = Post.objects.order_by('-pub_date')[:5]
-    #categories = []
-    #for post in latest_post_list:
-    #    category = Category.objects.select_related().get(slug=category_slug)
-   
-    return render(request, 'blog/index.html', { 'latest_post_list': latest_post_list, 'categories': categories, 'three_last_posts': three_last_posts, 'tags': tags})
 
-def detail(request, post_slug):
-    post = get_object_or_404(Post, slug=post_slug)
-    #categories_intermediate = Post_has_categories.objects.filter(post_id_id=post_id) 
-
-    return render(request, 'blog/detail.html', {'post': post, 'categories': categories, 'three_last_posts': three_last_posts, 'tags': tags})
-
-    
-    
-def category(request, category_slug):
-    category = Category.objects.select_related().get(slug=category_slug)
-    posts = category.post_set.all()
-    
-    return render(request, 'blog/category.html', {'posts': posts, 'category': category, 'categories': categories, 'three_last_posts': three_last_posts, 'tags': tags})
-
-    '''
-    # Create a context dictionary which we can pass to the template rendering engine.
-    context_dict = {}
-    
-    try:
-        # Can we find a category name slug with the given name?
-        # If we can't, the .get() method raises a DoesNotExist exception.
-        # So the .get() method returns one model instance or raises an exception.
-        category = Category.objects.get(slug=category_slug)
-        context_dict['category_name'] = category.name
-        
-        # Retrieve all of the associated pages.
-        # Note that filter returns >= 1 model instance.
-        posts = Post.objects.filter(category=category)
-        
-        # Adds our results list to the template context under name pages.
-        context_dict['posts'] = posts
-        # We also add the category object from the database to the context dictionary.
-        # We'll use this in the template to verify that the category exists.
-        context_dict['category'] = category
-    except Category.DoesNotExist:
-        # We get here if we didn't find the specified category.
-        # Don't do anything - the template displays the "no category" message for us.
-        pass
-    
-    # Go render the response and return it to the client.
-    return render(request, 'blog/category.html', context_dict)
-    # делаем выборку выбранной категории
-    '''
-    '''category = get_object_or_404(Category, slug = 'new-category')
-    #category = Category.objects.select_related().get(slug = category_slug) 
-    # выбираем все статьи по выбранной категории
-    posts = category.post_set.all() 
-    # возвращаем выбранную категорию и статьи в шаблон category.html
-    return render(request, 'category.html', {'posts': posts, 
-                                            'category': category})
-    '''
-
-
-def tag (request, tag_slug):
-    tag = Tag.objects.select_related().get(slug=tag_slug)
-    posts = tag.post_set.all()
-
-    return render(request, 'blog/tagpage.html', {'posts': posts, 'tag': tag, 'categories': categories, 'three_last_posts': three_last_posts, 'tags': tags})
-
-
-def comment(request, post_id):
-    response = "You're looking at the comment %s."
-    return HttpResponse(response % post_id)
+'''
 """
-
+    # from polls app tutorial
+    
     Blog homepage – displays the latest few entries.
     Entry “detail” page – permalink page for a single entry.
     Year-based archive page – displays all months with entries in the given year.
