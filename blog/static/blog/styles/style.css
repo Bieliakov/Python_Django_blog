@@ -26,6 +26,10 @@ a:hover, a:active{
     color: orangered;
 }
 
+article {
+	overflow: hidden;
+}
+
 body header > img{
     width: 30%;
     height: auto;

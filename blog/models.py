@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 # for resizing uploaded images
 #from imagekit.models import ImageSpecField
