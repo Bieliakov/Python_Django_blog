@@ -27,7 +27,7 @@
                 <p>Posted by {{ post.author}} on {{ post.pub_date }} in {{ post.category }}</p>
             </header>
             <content>
-                <img src="{% static post.image_thumbnail_big.url %}"/>
+                <img src="{% static post.image.url %}"/>
                 <p>
                     {{ post.body }}
                 </p>
@@ -41,17 +41,17 @@
                 
                 
                     <!--sharing via vkontakte button-->
-                    <script type="text/javascript">
-
                     <!--
+					<script type="text/javascript">
+
                     document.write(VK.Share.button(false, {type: 'button', text: 'Share'}));
-                    --> 
-                   
+                     
                     </script>
+					-->
                     <!--end sharing via vkontakte button-->
                     
                     <!--sharing via facebook button-->
-                    <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
+                    <!--<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>-->
                     <!--end sharing via facebook button-->
             </footer>
 

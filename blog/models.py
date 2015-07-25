@@ -1,7 +1,7 @@
 
 # for resizing uploaded images
-from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+#from imagekit.models import ImageSpecField
+#from imagekit.processors import ResizeToFill
 
 # for converting strings with spaces into proper slugs
 # from django.template.defaultfilters import slugify 
@@ -88,16 +88,16 @@ class Post(models.Model):
     objects = EntryQuerySet.as_manager()
     image = models.ImageField(upload_to='static/images/')
     
-    image_thumbnail_big = ImageSpecField(source='image',
-                                  processors=[ResizeToFill(150, 150)],
-                                  format='JPEG',
-                                  options={'quality': 60})
-                                  
-    image_thumbnail_small = ImageSpecField(source='image',
-                                  processors=[ResizeToFill(80, 80)],
-                                  format='JPEG',
-                                  options={'quality': 60})
-                                  
+    #image_thumbnail_big = ImageSpecField(source='image',
+    #                              processors=[ResizeToFill(150, 150)],
+    #                              format='JPEG',
+    #                              options={'quality': 60})
+    #                              
+    #image_thumbnail_small = ImageSpecField(source='image',
+    #                              processors=[ResizeToFill(80, 80)],
+    #                              format='JPEG',
+    #                              options={'quality': 60})
+    #                              
     # following commented lines might be used instead of creating category field with foreign key
     #life = 'Lf'
     #python = 'Py'

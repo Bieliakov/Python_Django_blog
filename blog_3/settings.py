@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 # import file for getting secret keys information (for security reasons)
-from blog_secret_keys import SECRET_KEY, SOCIAL_AUTH_FACEBOOK_KEY, SOCIAL_AUTH_FACEBOOK_SECRET
+#from blog_secret_keys import SECRET_KEY, SOCIAL_AUTH_FACEBOOK_KEY, SOCIAL_AUTH_FACEBOOK_SECRET
+SECRET_KEY = 'si9v7yn-zd@4uj&ohua8eh5@f-hu@i4uync2#4e)14r1zo$bvf'
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
@@ -116,11 +118,13 @@ WSGI_APPLICATION = 'blog_3.wsgi.application'
 # in my.cnf file is stored mysql database properties
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': 'c:/Program Files/MySQL/MySQL Server 5.5/my.cnf',
-            'init_command': 'SET storage_engine=INNODB',
-        },
+		'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        #'ENGINE': 'django.db.backends.mysql',
+        #'OPTIONS': {
+        #    'read_default_file': 'c:/Program Files/MySQL/MySQL Server 5.5/my.cnf',
+        #    'init_command': 'SET storage_engine=INNODB',
+        #},
     }
 }
 
