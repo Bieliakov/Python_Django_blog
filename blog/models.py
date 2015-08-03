@@ -87,7 +87,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category)
     tag = models.ManyToManyField(Tag)
     objects = EntryQuerySet.as_manager()
-    image = models.ImageField(upload_to='static/images/')
+    image = models.ImageField(upload_to='images/')
     
     #image_thumbnail_big = ImageSpecField(source='image',
     #                              processors=[ResizeToFill(150, 150)],
