@@ -85,7 +85,7 @@
                     </header>
                     <content>
                          <!--<img src="{% static post.image.url %}"/>-->
-                        <img src="{% static post.image.url %}"/>
+                        <img src="{{post.image.url}}"/>
                         
                         <p>{{ post.body|truncatechars:800 }}                        <a href="{% url 'blog:detail' post.slug %}">
                             <button type="button" class='btn'>Read more</button>
