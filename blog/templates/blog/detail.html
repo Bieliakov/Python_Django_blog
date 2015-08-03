@@ -27,7 +27,7 @@
                 <p>Posted by {{ post.author}} on {{ post.pub_date }} in {{ post.category }}</p>
             </header>
             <content>
-                <img src="{% static post.image.url %}"/>
+                <img src="/{{post.image.url}}"/>
                 <p>
                     {{ post.body }}
                 </p>
