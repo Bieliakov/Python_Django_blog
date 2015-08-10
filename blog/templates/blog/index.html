@@ -137,7 +137,7 @@
             <header>
                 <img src="/{{post.image.url}}"/>
                 <h2><a href="{% url 'blog:detail' post.slug %}">{{ post.title }}</a></h2>
-                <p>{{ post.pub_date | date }} in <a href="{% url 'blog:detail' post.slug %}">{{ post.category }}</a> category</p>
+                <p>{{ post.pub_date | date }} in {{ post.category }} category</p>
             </header>
             <content>
                  <!--<img src="{% static post.image.url %}"/>-->
